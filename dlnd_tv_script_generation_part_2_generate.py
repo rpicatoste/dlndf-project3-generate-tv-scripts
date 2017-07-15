@@ -44,11 +44,15 @@ def pick_word(probabilities, int_to_vocab):
     :return: String of the predicted word
     """
     
-    # n = np.random.randint(0, len(int_to_vocab.keys()))
-    
+    # I pick the word based on its probability, rather than the one with maximum
+    # probability. In this way we avoid falling in loops when generating the text,
+    # while still generating the most likely word after the previous one.
     n = np.argmax(probabilities)
+    probabilities = np.cumsum(probabilities)
+    randnum = np.random.random()
+    idx = np.where(probabilities>randnum)[0][0]
     
-    word = int_to_vocab[ n ]
+    word = int_to_vocab[ idx ]
     
     return word
 

@@ -135,11 +135,9 @@ def get_inputs():
     Create TF Placeholders for input, targets, and learning rate.
     :return: Tuple (input, targets, learning rate)
     """
-    
-    input = tf.placeholder(tf.int32, [None, None], name='input')
-    targets = tf.placeholder(tf.int32, [None, None], name='targets')
-    learning_rate = tf.placeholder(tf.float32, name='learning_rate')
-    
+    input = tf.placeholder(tf.int32, [None, None], name = 'input')
+    targets = tf.placeholder(tf.int32, [None, None], name = 'targets')
+    learning_rate = tf.placeholder(tf.float32, name = 'learning_rate')
     
     return input, targets, learning_rate
 
@@ -187,13 +185,10 @@ def get_embed(input_data, vocab_size, embed_dim):
     :param embed_dim: Number of embedding dimensions
     :return: Embedded input.
     """
-    
-    # embedding = tf.Variable(tf.random_uniform((vocab_size, embed_dim), -1, 1))
     embedding = tf.Variable( tf.random_normal((vocab_size, embed_dim)) )
     embed = tf.nn.embedding_lookup(embedding, input_data)
     
     return embed
-
 
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
@@ -215,7 +210,6 @@ def build_rnn(cell, inputs):
     
     return outputs, final_state
 
-
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
 """
@@ -232,15 +226,12 @@ def build_nn(cell, rnn_size, input_data, vocab_size, embed_dim):
     :param vocab_size: Vocabulary size
     :param embed_dim: Number of embedding dimensions
     :return: Tuple (Logits, FinalState)
-    """
-    
+    """    
     inputs = get_embed(input_data, vocab_size, embed_dim)
     outputs, final_state = build_rnn(cell, inputs)
     logits = tf.contrib.layers.fully_connected(outputs, vocab_size, activation_fn = None)
     
-    
     return logits, final_state
-
 
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
@@ -332,7 +323,7 @@ tests.test_get_batches(get_batches)
 
 #%%
 # Number of Epochs
-num_epochs = 100
+num_epochs = 300
 # Batch Size
 batch_size = 256
 # RNN Size
@@ -340,7 +331,7 @@ rnn_size = 256
 # Embedding Dimension Size
 embed_dim = 300
 # Sequence Length
-seq_length = 30
+seq_length = 50
 # Learning Rate
 learning_rate = 5e-3 
 # Show stats for every n number of batches
